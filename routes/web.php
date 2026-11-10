@@ -49,12 +49,15 @@ Route::middleware('auth')->group(function () {
     // [SOAL 2] Menutup celah A3: route GET /buku/{buku}/hapus (rentan CSRF)
     // sudah dihapus, diganti route DELETE yang hanya bisa diakses lewat form
     // ber-@csrf (lihat resources/views/buku/index.blade.php).
+    // [SOAL 3] Middleware diganti dari permission langsung menjadi can:kelola-buku.
     Route::delete('/buku/{buku}', [BukuController::class, 'destroy'])
-        ->whereNumber('buku')->name('buku.destroy');
+        ->whereNumber('buku')->middleware('can:kelola-buku')->name('buku.destroy');
 
     // Pengelolaan data buku (admin & petugas)
+    // [SOAL 3] Middleware diganti dari "permission:kelola data buku" menjadi
+    // "can:kelola-buku" (Gate terpusat di AppServiceProvider).
     Route::get('/kelola/buku', [BukuController::class, 'kelola'])
-        ->middleware('permission:kelola data buku')->name('buku.kelola');
+        ->middleware('can:kelola-buku')->name('buku.kelola');
 
     // Peminjaman milik sendiri
     Route::post('/peminjaman', [PeminjamanController::class, 'ajukan'])

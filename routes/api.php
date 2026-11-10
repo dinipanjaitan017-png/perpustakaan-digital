@@ -15,9 +15,11 @@ Route::middleware(['web', 'auth'])->group(function () {
         ->names('api.buku');
 
     // Tambah / ubah / hapus: hanya yang boleh mengelola data buku
+    // [SOAL 3] Middleware diganti dari "permission:kelola data buku" menjadi
+    // "can:kelola-buku" (Gate terpusat di AppServiceProvider).
     Route::apiResource('buku', BukuController::class)
         ->only(['store', 'update', 'destroy'])
-        ->middleware('permission:kelola data buku')
+        ->middleware('can:kelola-buku')
         ->names('api.buku');
 
     // Rekap: hanya yang boleh melihat laporan

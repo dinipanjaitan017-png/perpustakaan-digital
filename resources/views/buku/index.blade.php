@@ -5,7 +5,7 @@
 
     <section class="bagian">
         <div class="container">
-            @can('kelola data buku')
+            @can('kelola-buku')
                 <p><a href="{{ route('buku.kelola') }}" class="btn btn-secondary">Kelola data buku</a></p>
             @endcan
 
@@ -33,7 +33,7 @@
                                 {{-- [SOAL 2] Tombol Hapus memakai form dengan @csrf + @method('DELETE')
                                      agar penghapusan hanya bisa dipicu dari form resmi aplikasi
                                      (menutup celah A3 / CSRF). --}}
-                                @can('kelola data buku')
+                                @can('kelola-buku')
                                     <form method="POST" action="{{ route('buku.destroy', $buku->id) }}"
                                           onsubmit="return confirm('Hapus buku ini?');">
                                         @csrf

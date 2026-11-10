@@ -39,7 +39,7 @@
                     @can('lihat daftar buku')
                         <a href="{{ route('buku.index') }}" class="{{ request()->routeIs('buku.index', 'buku.show') ? 'active' : '' }}">Daftar Buku</a>
                     @endcan
-                    @can('kelola data buku')
+                    @can('kelola-buku')
                         <a href="{{ route('buku.kelola') }}" class="{{ request()->routeIs('buku.kelola') ? 'active' : '' }}">Kelola Buku</a>
                     @endcan
                     @can('kelola peminjaman')

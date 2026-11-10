@@ -27,7 +27,7 @@
         Daftar Buku
     </x-nav-link>
 @endcan
-@can('kelola data buku')
+@can('kelola-buku')
     <x-nav-link :href="route('buku.kelola')" :active="request()->routeIs('buku.kelola')">
         Kelola Buku
     </x-nav-link>
@@ -131,7 +131,7 @@
         Daftar Buku
     </x-responsive-nav-link>
 @endcan
-@can('kelola data buku')
+@can('kelola-buku')
     <x-responsive-nav-link :href="route('buku.kelola')" :active="request()->routeIs('buku.kelola')">
         Kelola Buku
     </x-responsive-nav-link>
