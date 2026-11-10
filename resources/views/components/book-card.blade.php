@@ -7,7 +7,8 @@
         </div>
 
         <div class="book-cover-title">
-            {{ $judul }}
+            {{-- [SOAL 1 - A1] RENTAN XSS: {!! !!} tidak melakukan escaping terhadap $judul. --}}
+            {!! $judul !!}
         </div>
 
     </div>

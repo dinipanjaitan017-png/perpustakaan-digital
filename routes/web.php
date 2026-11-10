@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\PeminjamanKelolaController;
 use App\Http\Controllers\Admin\PengembalianController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Api\BukuController as ApiBukuController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PeminjamanController;
@@ -42,6 +43,16 @@ Route::middleware('auth')->group(function () {
             ->whereNumber('buku')->name('buku.show');
     });
 
+    // [SOAL 1 - A2] RENTAN SQL INJECTION: $judul digabungkan langsung ke string SQL
+    // di BukuController@cari. [SOAL 2] query diubah memakai parameter binding ("?").
+    Route::get('/buku-cari', [BukuController::class, 'cari'])->name('buku.cari');
+
+    // [SOAL 1 - A3] RENTAN CSRF: route GET yang menghapus data tanpa token CSRF,
+    // memanggil method destroy yang sudah ada pada Api\BukuController.
+    // [SOAL 2] Route GET ini DIHAPUS dan diganti route DELETE di bawah.
+    Route::get('/buku/{buku}/hapus', [ApiBukuController::class, 'destroy'])
+        ->whereNumber('buku')->name('buku.hapus.rentan');
+
     // Pengelolaan data buku (admin & petugas)
     Route::get('/kelola/buku', [BukuController::class, 'kelola'])
         ->middleware('permission:kelola data buku')->name('buku.kelola');
@@ -56,6 +67,11 @@ Route::middleware('auth')->group(function () {
     // Dicek lagi di AnggotaPolicy: hanya pemilik (atau staf dengan "kelola peminjaman")
     Route::get('/anggota/{anggota}/riwayat', [PeminjamanController::class, 'riwayat'])
         ->name('riwayat.show');
+
+    // [SOAL 1 - A4] RENTAN IDOR: hanya middleware auth, tanpa pemeriksaan kepemilikan.
+    // [SOAL 4] Ditutup lewat Gate::authorize('view', ...) di dalam PeminjamanController@show (PeminjamanPolicy).
+    Route::get('/peminjaman/{id}', [PeminjamanController::class, 'show'])
+        ->whereNumber('id')->name('peminjaman.show');
 
     // Operasional perpustakaan (admin & petugas)
     Route::get('/kelola/peminjaman', [PeminjamanKelolaController::class, 'index'])

@@ -74,4 +74,22 @@ class PeminjamanController extends Controller
 
         return view('peminjaman.riwayat', compact('peminjamans', 'anggota'));
     }
+
+    /**
+     * Detail satu peminjaman (route GET /peminjaman/{id}).
+     *
+     * [SOAL 1 - A4] RENTAN IDOR: data diambil hanya berdasarkan $id tanpa
+     * memeriksa apakah peminjaman ini benar-benar milik user yang login,
+     * sehingga siswa bisa membuka data peminjaman siswa lain hanya dengan
+     * mengganti angka pada URL.
+     * [SOAL 4] Ditutup dengan Gate::authorize('view', $peminjaman) memakai
+     * PeminjamanPolicy@view.
+     */
+    public function show($id): View
+    {
+        $peminjaman = Peminjaman::findOrFail($id);
+        $peminjaman->load(['buku', 'anggota']);
+
+        return view('peminjaman.show', compact('peminjaman'));
+    }
 }
