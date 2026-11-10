@@ -71,16 +71,30 @@ class RolePermissionSeeder extends Seeder
         $siswa->syncPermissions($umum);
 
         // Akun awal (role ditetapkan di sini, bukan lewat form registrasi)
+        //
+        // [SOAL 5c] Password default "password" SENGAJA diganti agar tidak
+        // lagi bisa dipakai untuk login (NIM dipakai sebagai contoh payload
+        // data uji pada soal-soal audit sebelumnya, bukan di sini).
+        // Password diambil dari .env (ADMIN_SEED_PASSWORD) agar tidak
+        // di-hardcode ke dalam kode yang ikut di-commit; .env sendiri sudah
+        // ada di .gitignore. Jika variabel tidak diisi, dipakai nilai
+        // cadangan yang tetap BUKAN "password".
+        $passwordAdmin = env('ADMIN_SEED_PASSWORD', 'P3rpus-Admin!Aman');
+
         $akun = [
-            ['Admin Perpustakaan', 'admin@perpustakaan.test', 'admin'],
-            ['Petugas Perpustakaan', 'petugas@perpustakaan.test', 'petugas'],
-            ['Siswa Contoh', 'siswa@perpustakaan.test', 'siswa'],
+            ['Admin Perpustakaan', 'admin@perpustakaan.test', 'admin', $passwordAdmin],
+            ['Petugas Perpustakaan', 'petugas@perpustakaan.test', 'petugas', $passwordAdmin],
+            ['Siswa Contoh', 'siswa@perpustakaan.test', 'siswa', $passwordAdmin],
         ];
 
-        foreach ($akun as [$nama, $email, $role]) {
-            $user = User::firstOrCreate(
+        foreach ($akun as [$nama, $email, $role, $password]) {
+            // updateOrCreate dipakai (bukan firstOrCreate) agar password
+            // akun yang SUDAH ADA di database ikut ter-update saat seeder
+            // dijalankan ulang, sehingga password lama "password" benar-benar
+            // tidak berlaku lagi setelah `php artisan db:seed`.
+            $user = User::updateOrCreate(
                 ['email' => $email],
-                ['name' => $nama, 'password' => 'password'] // di-hash otomatis oleh cast "hashed"
+                ['name' => $nama, 'password' => $password] // di-hash otomatis oleh cast "hashed"
             );
             $user->syncRoles($role);
 
