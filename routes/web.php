@@ -4,7 +4,6 @@ use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\PeminjamanKelolaController;
 use App\Http\Controllers\Admin\PengembalianController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Api\BukuController as ApiBukuController;
 use App\Http\Controllers\BukuController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PeminjamanController;
@@ -47,11 +46,11 @@ Route::middleware('auth')->group(function () {
     // di BukuController@cari. [SOAL 2] query diubah memakai parameter binding ("?").
     Route::get('/buku-cari', [BukuController::class, 'cari'])->name('buku.cari');
 
-    // [SOAL 1 - A3] RENTAN CSRF: route GET yang menghapus data tanpa token CSRF,
-    // memanggil method destroy yang sudah ada pada Api\BukuController.
-    // [SOAL 2] Route GET ini DIHAPUS dan diganti route DELETE di bawah.
-    Route::get('/buku/{buku}/hapus', [ApiBukuController::class, 'destroy'])
-        ->whereNumber('buku')->name('buku.hapus.rentan');
+    // [SOAL 2] Menutup celah A3: route GET /buku/{buku}/hapus (rentan CSRF)
+    // sudah dihapus, diganti route DELETE yang hanya bisa diakses lewat form
+    // ber-@csrf (lihat resources/views/buku/index.blade.php).
+    Route::delete('/buku/{buku}', [BukuController::class, 'destroy'])
+        ->whereNumber('buku')->name('buku.destroy');
 
     // Pengelolaan data buku (admin & petugas)
     Route::get('/kelola/buku', [BukuController::class, 'kelola'])

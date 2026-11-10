@@ -21,15 +21,27 @@
                             :tahun="$buku->tahun_terbit"
                             :kategori="$buku->kategori->nama ?? 'Umum'"
                         >
-                            @can('mengajukan peminjaman buku')
-                                <x-slot name="description">
+                            <x-slot name="description">
+                                @can('mengajukan peminjaman buku')
                                     <form method="POST" action="{{ route('peminjaman.ajukan') }}">
                                         @csrf
                                         <input type="hidden" name="buku_id" value="{{ $buku->id }}">
                                         <button class="btn btn-primary">Ajukan Pinjam</button>
                                     </form>
-                                </x-slot>
-                            @endcan
+                                @endcan
+
+                                {{-- [SOAL 2] Tombol Hapus memakai form dengan @csrf + @method('DELETE')
+                                     agar penghapusan hanya bisa dipicu dari form resmi aplikasi
+                                     (menutup celah A3 / CSRF). --}}
+                                @can('kelola data buku')
+                                    <form method="POST" action="{{ route('buku.destroy', $buku->id) }}"
+                                          onsubmit="return confirm('Hapus buku ini?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger">Hapus</button>
+                                    </form>
+                                @endcan
+                            </x-slot>
                         </x-book-card>
                     @endforeach
                 </div>

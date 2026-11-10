@@ -38,16 +38,34 @@ class BukuController extends Controller
     /**
      * Pencarian buku berdasarkan judul (route GET /buku-cari).
      *
-     * [SOAL 1 - A2] RENTAN SQL INJECTION: nilai $judul dari query string
-     * digabungkan langsung ke dalam string SQL, sehingga payload seperti
-     * ' OR '1'='1 mengubah logika query dan membocorkan seluruh data.
+     * [SOAL 2] Diperbaiki: nilai $judul tidak lagi digabungkan langsung ke
+     * string SQL, melainkan dikirim lewat parameter binding ("?"). Driver
+     * database yang melakukan escaping terhadap nilainya, sehingga payload
+     * seperti ' OR '1'='1 diperlakukan sebagai teks biasa, bukan bagian dari
+     * logika query (menutup celah A2 / SQL Injection).
      */
     public function cari(Request $request): JsonResponse
     {
         $judul = $request->query('judul');
 
-        $hasil = DB::select("select * from bukus where judul = '{$judul}'");
+        $hasil = DB::select('select * from bukus where judul = ?', [$judul]);
 
         return response()->json($hasil);
+    }
+
+    /**
+     * Hapus buku (route DELETE /buku/{buku}).
+     *
+     * [SOAL 2] Menggantikan route GET /buku/{buku}/hapus pada A3. Karena
+     * memakai verb DELETE dan form dengan @csrf, Laravel memverifikasi token
+     * CSRF sebelum method ini dijalankan, sehingga tautan di jebakan.html
+     * (yang hanya berupa <a href> biasa / GET) tidak lagi bisa memicu
+     * penghapusan data (menutup celah A3 / CSRF).
+     */
+    public function destroy(Buku $buku): \Illuminate\Http\RedirectResponse
+    {
+        $buku->delete();
+
+        return redirect()->route('buku.index')->with('status', 'Buku berhasil dihapus.');
     }
 }

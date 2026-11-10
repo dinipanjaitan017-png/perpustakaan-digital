@@ -7,8 +7,9 @@
         </div>
 
         <div class="book-cover-title">
-            {{-- [SOAL 1 - A1] RENTAN XSS: {!! !!} tidak melakukan escaping terhadap $judul. --}}
-            {!! $judul !!}
+            {{-- [SOAL 2] Diperbaiki: kembali memakai {{ }} agar Blade melakukan
+                 escaping otomatis terhadap $judul (menutup celah A1 / XSS). --}}
+            {{ $judul }}
         </div>
 
     </div>
