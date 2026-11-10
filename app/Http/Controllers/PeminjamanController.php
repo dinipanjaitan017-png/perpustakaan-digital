@@ -78,16 +78,18 @@ class PeminjamanController extends Controller
     /**
      * Detail satu peminjaman (route GET /peminjaman/{id}).
      *
-     * [SOAL 1 - A4] RENTAN IDOR: data diambil hanya berdasarkan $id tanpa
-     * memeriksa apakah peminjaman ini benar-benar milik user yang login,
-     * sehingga siswa bisa membuka data peminjaman siswa lain hanya dengan
-     * mengganti angka pada URL.
-     * [SOAL 4] Ditutup dengan Gate::authorize('view', $peminjaman) memakai
-     * PeminjamanPolicy@view.
+     * [SOAL 4] Menutup celah A4 (IDOR): setelah data peminjaman diambil,
+     * Gate::authorize('view', $peminjaman) memanggil PeminjamanPolicy@view.
+     * Jika siswa membuka peminjaman milik siswa lain, Gate mengembalikan
+     * false dan Laravel otomatis melempar 403 Forbidden sebelum data
+     * ditampilkan ke view.
      */
     public function show($id): View
     {
         $peminjaman = Peminjaman::findOrFail($id);
+
+        Gate::authorize('view', $peminjaman);
+
         $peminjaman->load(['buku', 'anggota']);
 
         return view('peminjaman.show', compact('peminjaman'));
