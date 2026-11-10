@@ -1,0 +1,119 @@
+/* Gaya Perpustakaan Digital (pengganti app.css lama yang tertimpa saat instal Breeze) */
+:root{--navy:#2c3e50;--biru:#3498db;--biru-tua:#2176ae;--kuning:#f39c12;--merah:#e74c3c;--hijau:#27ae60;--abu:#f4f6f8;--teks:#333}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:var(--abu);color:var(--teks);line-height:1.5;display:flex;flex-direction:column;min-height:100vh}
+main{flex:1}
+a{color:inherit;text-decoration:none}
+.container{width:100%;max-width:1100px;margin:0 auto;padding:0 20px}
+.container.sempit{max-width:680px}
+.tumpuk>*+*{margin-top:20px}
+
+/* header & navbar */
+.header{background:var(--navy);color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.navbar{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:12px;padding-bottom:12px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}
+.brand-icon{font-size:30px}
+.brand h1{margin:0;font-size:20px}
+.brand span{font-size:12px;opacity:.75}
+.nav-menu{display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.nav-menu a,.nav-menu button{color:#fff;padding:8px 12px;border-radius:6px;font-size:14px;background:none;border:0;cursor:pointer;font-family:inherit}
+.nav-menu a:hover,.nav-menu button:hover{background:rgba(255,255,255,.15)}
+.nav-menu a.active{background:var(--biru)}
+.nav-user{font-size:13px;opacity:.85;padding:0 8px}
+.badge-role{background:var(--kuning);color:#fff;border-radius:10px;padding:1px 8px;font-size:11px;text-transform:uppercase;margin-left:4px}
+
+/* halaman */
+.judul-halaman-wrap{background:#fff;border-bottom:1px solid #e1e5ea}
+.judul-halaman{margin:0;padding:20px 0;font-size:24px;color:var(--navy);font-weight:700}
+.bagian{padding:28px 0}
+.mt{margin-top:16px}
+.kartu{background:#fff;border-radius:8px;box-shadow:0 2px 4px rgba(0,0,0,.1);padding:20px}
+.kartu.tabel-scroll{padding:0;overflow-x:auto}
+.kartu.form{display:grid;gap:14px}
+.kartu.form-baris{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;align-items:end}
+.kartu.detail p{margin:6px 0}
+.tebal{font-weight:700}
+
+/* alert */
+.alert{padding:12px 16px;border-radius:6px;font-size:14px;margin-top:14px}
+.alert-sukses{background:#dff5e6;color:#1e7e34}
+.alert-error{background:#fde2e0;color:#b02a21}
+
+/* statistik */
+.grid-stat{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.grid-stat.lima{grid-template-columns:repeat(5,1fr)}
+.stat-label{color:#7f8c8d;font-size:13px}
+.stat-nilai{font-size:28px;font-weight:700;color:var(--navy)}
+
+/* tabel */
+.tabel{width:100%;border-collapse:collapse;font-size:14px;text-align:left}
+.tabel th,.tabel td{padding:12px;border-bottom:1px solid #e6e6e6}
+.tabel thead th{background:var(--biru);color:#fff}
+.tabel tbody tr:nth-child(even){background:#f7f9fb}
+.kapital{text-transform:capitalize}
+.kosong{text-align:center;color:#7f8c8d;padding:24px!important}
+.baris{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+
+/* form & tombol */
+.label{display:block;margin-bottom:4px;font-size:14px}
+.input{width:100%;padding:10px;border:1px solid #ccc;border-radius:4px;font-family:inherit;font-size:14px}
+.input.kecil{padding:6px;width:auto}
+.btn{display:inline-block;padding:10px 18px;border:0;border-radius:6px;cursor:pointer;font-size:14px;font-family:inherit}
+.btn-primary{background:var(--biru);color:#fff}
+.btn-primary:hover{background:var(--biru-tua)}
+.btn-secondary{background:#fff;color:var(--navy);border:1px solid var(--navy)}
+.tautan{color:var(--biru-tua);text-decoration:underline;background:none;border:0;cursor:pointer;font-size:14px;padding:0;font-family:inherit}
+.tautan.bahaya{color:var(--merah)}
+.tautan.sukses{color:var(--hijau)}
+.tautan.abu{color:#7f8c8d}
+
+/* hero & fitur (beranda) */
+.hero{background:linear-gradient(135deg,var(--navy),var(--biru));color:#fff;padding:64px 0}
+.hero-content{display:flex;align-items:center;justify-content:space-between;gap:40px;flex-wrap:wrap}
+.hero-text{flex:1;min-width:280px}
+.hero-label{display:inline-block;background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;font-size:12px;letter-spacing:1px}
+.hero h2{font-size:40px;margin:16px 0}
+.hero h2 span{color:#ffd86b;display:block}
+.hero p{max-width:520px;opacity:.9}
+.hero-buttons{display:flex;gap:12px;margin-top:24px;flex-wrap:wrap}
+.hero .btn-primary{background:var(--kuning)}
+.hero .btn-secondary{background:transparent;color:#fff;border-color:#fff}
+.hero-card{background:rgba(255,255,255,.12);border-radius:12px;padding:32px;text-align:center;max-width:300px}
+.book-illustration{font-size:64px}
+.about{padding:56px 0;background:#fff}
+.section-heading{text-align:center;max-width:620px;margin:0 auto 32px}
+.section-heading span{color:var(--biru);font-weight:700;font-size:12px;letter-spacing:1px}
+.section-heading h2{margin:8px 0;color:var(--navy)}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feature-card{background:var(--abu);border-radius:8px;padding:24px}
+.feature-number{font-size:28px;font-weight:700;color:var(--biru)}
+.feature-card h3{margin:8px 0;color:var(--navy)}
+
+/* kartu buku */
+.book-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:20px}
+.book-card{background:#fff;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.12);overflow:hidden;display:flex;flex-direction:column}
+.book-cover{background:linear-gradient(135deg,var(--navy),var(--biru));color:#fff;height:140px;padding:14px;display:flex;flex-direction:column;justify-content:space-between}
+.book-cover-pattern{font-size:11px;letter-spacing:3px;opacity:.7}
+.book-cover-title{font-weight:700;font-size:16px}
+.book-content{padding:16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.book-category{align-self:flex-start;background:#e8f3fb;color:var(--biru-tua);font-size:11px;padding:2px 10px;border-radius:10px}
+.book-content h3{margin:6px 0 0;font-size:17px;color:var(--navy)}
+.book-author,.book-year{margin:0;font-size:13px;color:#7f8c8d}
+.book-description{margin-top:8px}
+.book-button{margin-top:auto;padding-top:10px;color:var(--biru-tua);font-weight:700;font-size:14px}
+
+/* auth */
+.auth-wrap{display:flex;justify-content:center;padding:40px 20px}
+.auth-card{background:#fff;border-radius:10px;box-shadow:0 2px 8px rgba(0,0,0,.12);padding:28px;width:100%;max-width:440px}
+
+/* footer */
+.footer{background:var(--navy);color:#fff;padding:24px 0;margin-top:40px}
+.footer-content{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer h3{margin:0 0 6px}
+.footer p{margin:2px 0;font-size:13px;opacity:.85}
+.footer-right{text-align:right}
+
+@media(max-width:800px){
+ .grid-stat,.grid-stat.lima,.feature-grid,.kartu.form-baris{grid-template-columns:1fr 1fr}
+ .hero h2{font-size:30px}
+}
