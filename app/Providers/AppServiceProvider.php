@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Peminjaman;
 use App\Policies\PeminjamanPolicy;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -22,6 +23,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Paksa HTTPS di Vercel/Production agar link CSS/Asset tidak error HTTP
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
+
         /**
          * [SOAL 3] Gate terpusat untuk pengelolaan buku.
          *
