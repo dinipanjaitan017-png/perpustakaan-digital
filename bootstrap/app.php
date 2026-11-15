@@ -12,6 +12,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
+        // PERCAYAI PROXY VERCEL AGAR URL BERUBAH JADI HTTPS
+        $middleware->trustProxies(at: '*');
+
         // Alias middleware Spatie Laravel Permission
         $middleware->alias([
             'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
